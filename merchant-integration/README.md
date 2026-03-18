@@ -1,0 +1,91 @@
+# Merchant Integration Guide
+
+API documentation for merchants integrating with the P2P platform.
+
+**Swagger UI**: `{BASE_URL}/client-docs/index.html`
+
+**Base URL**: `{BASE_URL}`
+
+---
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Pages](#pages)
+- [Quick Overview](#quick-overview)
+  - [Integration Flow](#integration-flow)
+  - [Authentication](#authentication)
+  - [Response Format](#response-format)
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have received the following from the platform administrator:
+
+| Credential          | Description                                      |
+| ------------------- | ------------------------------------------------ |
+| `client_id`         | Your unique merchant identifier                  |
+| `client_secret`     | Secret key used for HMAC-SHA256 signature         |
+| `enable_test_mode`  | If enabled, you can bypass signature verification |
+
+---
+
+## Pages
+
+| #  | Page                                              | Description                                  |
+| -- | ------------------------------------------------- | -------------------------------------------- |
+| 01 | [Public APIs](01-get-bank-list.md)                | APIs that require no authentication          |
+| 02 | [Authenticated APIs](02-merchant-info.md)         | How to call APIs with `x-client-id` & HMAC signature |
+| 03 | [Create Customer](03-create-customer.md)          | Register a customer bank account             |
+| 04 | [Create Deposit](04-create-deposit.md)            | Submit a deposit transaction                 |
+| 05 | [Create Withdraw](05-create-withdraw.md)          | Submit a withdrawal transaction              |
+
+---
+
+## Quick Overview
+
+### Integration Flow
+
+```
+1. Call GET /api/v1/client/bank          → Get list of supported banks (public, no auth)
+2. Call GET /api/v1/client/merchant-info  → Verify your credentials work (authenticated)
+3. Call POST /api/v1/client/customer      → Create a customer bank account
+4. Call POST /api/v1/client/tx/deposit    → Submit a deposit transaction
+5. Call POST /api/v1/client/tx/withdraw   → Submit a withdrawal transaction
+```
+
+### Authentication
+
+Most endpoints require three HTTP headers:
+
+| Header         | Required | Description                                           |
+| -------------- | -------- | ----------------------------------------------------- |
+| `x-client-id`  | Yes      | Your merchant `client_id`                             |
+| `x-signature`  | Yes      | HMAC-SHA256 signature (see [page 02](02-merchant-info.md)) |
+| `x-timestamp`  | Yes      | Current Unix epoch in seconds                         |
+
+> **Test Mode**: If test mode is enabled for your merchant, you can set `x-signature` equal to your `x-client-id` value to bypass signature verification during development.
+
+### Response Format
+
+**Success**
+```json
+{
+  "status": "success",
+  "data": { ... }
+}
+```
+
+**Error**
+```json
+{
+  "status": "error",
+  "message": "Description of the error",
+  "code": "ERROR_CODE"
+}
+```
+
+---
+
+**Next →** [01 — Public APIs](01-get-bank-list.md)
