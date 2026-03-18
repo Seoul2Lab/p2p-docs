@@ -1,4 +1,4 @@
-[← Previous](02-merchant-info.md) · [Index](README.md) · **03 — Create Customer** · [Next →](04-create-deposit.md)
+[← Previous](02-call-api-with-authentication.md) · [Index](README.md) · **03 — Create Customer** · [Next →](04-create-deposit.md)
 
 ---
 
@@ -34,13 +34,13 @@ x-signature:  computed_hmac_signature
 x-timestamp:  1742385600
 ```
 
-See [02 — Authenticated APIs](02-merchant-info.md#signature-calculation) for how to compute the signature.
+See [02 — Authenticated APIs](02-call-api-with-authentication.md#signature-calculation) for how to compute the signature.
 
 ### Request Body
 
 | Field                  | Type   | Required | Description                                      |
 | ---------------------- | ------ | -------- | ------------------------------------------------ |
-| `bank_code`            | string | Yes      | Bank code from [GET /api/v1/client/bank](01-get-bank-list.md) (e.g. `"KBANK"`) |
+| `bank_code`            | string | Yes      | Bank code from [GET /api/v1/client/bank](01-call-public-api.md) (e.g. `"KBANK"`) |
 | `bank_account_number`  | string | Yes      | Customer's bank account number                   |
 | `bank_account_name`    | string | Yes      | Account holder name (Thai)                       |
 | `bank_account_name_en` | string | No       | Account holder name (English)                    |
@@ -189,7 +189,7 @@ Returned when a customer account with the same bank code and account number alre
 
 ### Invalid Bank Code (400)
 
-The `bank_code` must be one of the codes returned by [GET /api/v1/client/bank](01-get-bank-list.md).
+The `bank_code` must be one of the codes returned by [GET /api/v1/client/bank](01-call-public-api.md).
 
 ```json
 {
@@ -211,4 +211,4 @@ The `bank_code` must be one of the codes returned by [GET /api/v1/client/bank](0
 
 ---
 
-[← Previous](02-merchant-info.md) · [Index](README.md) · **03 — Create Customer** · [Next →](04-create-deposit.md)
+[← Previous](02-call-api-with-authentication.md) · [Index](README.md) · **03 — Create Customer** · [Next →](04-create-deposit.md)

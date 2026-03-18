@@ -35,8 +35,8 @@ Before you begin, make sure you have received the following from the platform ad
 
 | #  | Page                                              | Description                                  |
 | -- | ------------------------------------------------- | -------------------------------------------- |
-| 01 | [Public APIs](01-get-bank-list.md)                | APIs that require no authentication          |
-| 02 | [Authenticated APIs](02-merchant-info.md)         | How to call APIs with `x-client-id` & HMAC signature |
+| 01 | [Public APIs](01-call-public-api.md)               | APIs that require no authentication          |
+| 02 | [Authenticated APIs](02-call-api-with-authentication.md) | How to call APIs with `x-client-id` & HMAC signature |
 | 03 | [Create Customer](03-create-customer.md)          | Register a customer bank account             |
 | 04 | [Create Deposit](04-create-deposit.md)            | Submit a deposit transaction                 |
 | 05 | [Create Withdraw](05-create-withdraw.md)          | Submit a withdrawal transaction              |
@@ -62,7 +62,7 @@ Most endpoints require three HTTP headers:
 | Header         | Required | Description                                           |
 | -------------- | -------- | ----------------------------------------------------- |
 | `x-client-id`  | Yes      | Your merchant `client_id`                             |
-| `x-signature`  | Yes      | HMAC-SHA256 signature (see [page 02](02-merchant-info.md)) |
+| `x-signature`  | Yes      | HMAC-SHA256 signature (see [page 02](02-call-api-with-authentication.md)) |
 | `x-timestamp`  | Yes      | Current Unix epoch in seconds                         |
 
 > **Test Mode**: If test mode is enabled for your merchant, you can set `x-signature` equal to your `x-client-id` value to bypass signature verification during development.
@@ -88,4 +88,4 @@ Most endpoints require three HTTP headers:
 
 ---
 
-**Next →** [01 — Public APIs](01-get-bank-list.md)
+**Next →** [01 — Public APIs](01-call-public-api.md)

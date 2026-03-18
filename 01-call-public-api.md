@@ -1,4 +1,4 @@
-[← Index](README.md) · **01 — Public APIs (No Authentication)** · [Next →](02-merchant-info.md)
+[← Index](README.md) · **01 — Public APIs (No Authentication)** · [Next →](02-call-api-with-authentication.md)
 
 ---
 
@@ -148,4 +148,4 @@ console.log(data);
 
 ---
 
-[← Index](README.md) · **01 — Public APIs (No Authentication)** · [Next →](02-merchant-info.md)
+[← Index](README.md) · **01 — Public APIs (No Authentication)** · [Next →](02-call-api-with-authentication.md)

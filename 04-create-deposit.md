@@ -39,7 +39,7 @@ x-signature:  computed_hmac_signature
 x-timestamp:  1742385600
 ```
 
-See [02 — Authenticated APIs](02-merchant-info.md#signature-calculation) for how to compute the signature.
+See [02 — Authenticated APIs](02-call-api-with-authentication.md#signature-calculation) for how to compute the signature.
 
 ### Request Body
 

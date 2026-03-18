@@ -1,4 +1,4 @@
-[← Previous](01-get-bank-list.md) · [Index](README.md) · **02 — Authenticated APIs** · [Next →](03-create-customer.md)
+[← Previous](01-call-public-api.md) · [Index](README.md) · **02 — Authenticated APIs** · [Next →](03-create-customer.md)
 
 ---
 
@@ -262,4 +262,4 @@ getMerchantInfo();
 
 ---
 
-[← Previous](01-get-bank-list.md) · [Index](README.md) · **02 — Authenticated APIs** · [Next →](03-create-customer.md)
+[← Previous](01-call-public-api.md) · [Index](README.md) · **02 — Authenticated APIs** · [Next →](03-create-customer.md)
