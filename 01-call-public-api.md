@@ -37,15 +37,16 @@ No headers, body, or query parameters required.
 
 ### Response
 
-| Field          | Type     | Description               |
-| -------------- | -------- | ------------------------- |
-| `banks`        | array    | List of bank objects      |
-| `banks[].code`          | string   | Bank code (e.g. `"BBL"`)           |
-| `banks[].name_en`       | string   | Bank name in English               |
-| `banks[].name_th`       | string   | Bank name in Thai                  |
-| `banks[].bank_code2`    | string?  | Secondary bank code (nullable)     |
-| `banks[].bot_bank_code` | string   | Bank of Thailand code              |
-| `total`        | integer  | Total number of banks     |
+| Field                        | Type    | Description                    |
+| ---------------------------- | ------- | ------------------------------ |
+| `status`                     | string  | `"success"`                    |
+| `data.banks`                 | array   | List of bank objects           |
+| `data.banks[].code`          | string  | Bank code (e.g. `"BBL"`)       |
+| `data.banks[].name_en`       | string  | Bank name in English           |
+| `data.banks[].name_th`       | string  | Bank name in Thai              |
+| `data.banks[].bank_code2`    | string? | Secondary bank code (nullable) |
+| `data.banks[].bot_bank_code` | string  | Bank of Thailand code          |
+| `data.total`                 | integer | Total number of banks          |
 
 ### Example — cURL
 
@@ -65,30 +66,33 @@ console.log(data);
 
 ```json
 {
-  "banks": [
-    {
-      "code": "BBL",
-      "name_en": "Bangkok Bank",
-      "name_th": "ธนาคารกรุงเทพ",
-      "bank_code2": null,
-      "bot_bank_code": "002"
-    },
-    {
-      "code": "KBANK",
-      "name_en": "Kasikorn Bank",
-      "name_th": "ธนาคารกสิกรไทย",
-      "bank_code2": null,
-      "bot_bank_code": "004"
-    },
-    {
-      "code": "SCB",
-      "name_en": "Siam Commercial Bank",
-      "name_th": "ธนาคารไทยพาณิชย์",
-      "bank_code2": null,
-      "bot_bank_code": "014"
-    }
-  ],
-  "total": 3
+	"status": "success",
+	"data": {
+		"banks": [
+			{
+				"code": "BBL",
+				"name_en": "Bangkok Bank",
+				"name_th": "ธนาคารกรุงเทพ",
+				"bank_code2": null,
+				"bot_bank_code": "002"
+			},
+			{
+				"code": "KBANK",
+				"name_en": "Kasikorn Bank",
+				"name_th": "ธนาคารกสิกรไทย",
+				"bank_code2": null,
+				"bot_bank_code": "004"
+			},
+			{
+				"code": "SCB",
+				"name_en": "Siam Commercial Bank",
+				"name_th": "ธนาคารไทยพาณิชย์",
+				"bank_code2": null,
+				"bot_bank_code": "014"
+			}
+		],
+		"total": 3
+	}
 }
 ```
 
@@ -114,9 +118,7 @@ curl -X GET {BASE_URL}/api/v1/client/bank/code/KBANK
 
 ```javascript
 const bankCode = "KBANK";
-const response = await fetch(
-  `${BASE_URL}/api/v1/client/bank/code/${bankCode}`
-);
+const response = await fetch(`${BASE_URL}/api/v1/client/bank/code/${bankCode}`);
 const data = await response.json();
 console.log(data);
 ```
@@ -125,14 +127,14 @@ console.log(data);
 
 ```json
 {
-  "status": "success",
-  "data": {
-    "code": "KBANK",
-    "name_en": "Kasikorn Bank",
-    "name_th": "ธนาคารกสิกรไทย",
-    "bank_code2": null,
-    "bot_bank_code": "004"
-  }
+	"status": "success",
+	"data": {
+		"code": "KBANK",
+		"name_en": "Kasikorn Bank",
+		"name_th": "ธนาคารกสิกรไทย",
+		"bank_code2": null,
+		"bot_bank_code": "004"
+	}
 }
 ```
 
@@ -140,9 +142,9 @@ console.log(data);
 
 ```json
 {
-  "status": "error",
-  "message": "Bank not found",
-  "code": "BANK_NOT_FOUND"
+	"status": "error",
+	"message": "Bank not found",
+	"code": "BANK_NOT_FOUND"
 }
 ```
 
