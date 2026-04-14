@@ -28,6 +28,12 @@ Submit a deposit request for a customer. The system will assign a bank channel a
   - [Constraints](#constraints-upload-slip)
   - [Response](#response-upload-slip)
   - [Error Responses](#error-responses-upload-slip)
+- [POST /api/v1/client/tx/upload-slip/:transaction_uuid — Upload Slip (Client API)](#post-apiv1clienttxupload-sliptransaction_uuid)
+  - [Request Headers](#request-headers-client-upload)
+  - [Path Parameters](#path-parameters-client-upload)
+  - [Request Body (multipart)](#request-body-client-upload)
+  - [Example — cURL](#example--curl-client-upload)
+  - [Response](#response-client-upload)
 - [POST /api/v1/client/tx/cancel-deposit](#post-apiv1clienttxcancel-deposit)
   - [Request Body](#request-body-cancel-deposit)
   - [Sample Response](#sample-response-cancel-deposit)
@@ -485,6 +491,98 @@ Authorization: Bearer <guest_jwt_token>
 	"status": "error",
 	"message": "Slip verification service is unavailable",
 	"code": "SERVICE_UNAVAILABLE"
+}
+```
+
+---
+
+## POST /api/v1/client/tx/upload-slip/:transaction_uuid
+
+Upload a payment slip image for a deposit transaction via the **merchant client API**.
+
+This is the direct merchant integration endpoint — use this when your system (not the customer) handles slip uploads.
+
+> **Authentication**: Required — `x-client-id`, `x-signature`, `x-timestamp`
+
+### Request Headers {#request-headers-client-upload}
+
+```
+Content-Type: multipart/form-data
+x-client-id:  your_client_id
+x-signature:  computed_hmac_signature
+x-timestamp:  1742385600
+```
+
+See [02 — Authenticated APIs](02-call-api-with-authentication.md#signature-calculation) for how to compute the signature.
+
+> **Note**: For `multipart/form-data` requests, the **request body** used in the signature calculation should be an **empty string** `""` (since the body is binary form data, not JSON).
+
+### Path Parameters {#path-parameters-client-upload}
+
+| Parameter          | Type   | Required | Description                     |
+| ------------------ | ------ | -------- | ------------------------------- |
+| `transaction_uuid` | string | Yes      | UUID of the deposit transaction |
+
+### Request Body (multipart/form-data) {#request-body-client-upload}
+
+| Field  | Type | Required | Description                              |
+| ------ | ---- | -------- | ---------------------------------------- |
+| `file` | file | Yes      | Slip image (JPG, JPEG, or PNG, max 5 MB) |
+
+### Example — cURL {#example--curl-client-upload}
+
+```bash
+# Variables
+CLIENT_ID="your_client_id"
+CLIENT_SECRET="your_client_secret"
+TIMESTAMP=$(date +%s)
+TRANSACTION_UUID="a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+
+# For multipart requests, request body in signature is empty
+REQUEST_BODY=""
+QUERY_STRING=""
+COMBINED="${CLIENT_ID}|${TIMESTAMP}|${REQUEST_BODY}|${QUERY_STRING}"
+
+# Compute HMAC-SHA256 signature
+SIGNATURE=$(echo -n "$COMBINED" | openssl dgst -sha256 -hmac "$CLIENT_SECRET" | awk '{print $2}')
+
+# Upload slip
+curl -X POST {BASE_URL}/api/v1/client/tx/upload-slip/${TRANSACTION_UUID} \
+  -H "x-client-id: ${CLIENT_ID}" \
+  -H "x-signature: ${SIGNATURE}" \
+  -H "x-timestamp: ${TIMESTAMP}" \
+  -F "file=@/path/to/slip.jpg"
+```
+
+### Response (200 OK) {#response-client-upload}
+
+Same response format as the [payment-link slip upload](#response-upload-slip).
+
+```json
+{
+  "status": "success",
+  "data": {
+    "message": "Slip uploaded and verified successfully",
+    "slip_status": "verified",
+    "verification_result": { ... },
+    "slip": { ... },
+    "audit_uuid": "a9b8c7d6-e5f4-3210-abcd-ef0987654321",
+    "transaction_updated": true
+  }
+}
+```
+
+### Error Responses
+
+Same error codes as [payment-link slip upload errors](#error-responses-upload-slip), plus:
+
+#### Unauthorized (401)
+
+```json
+{
+	"status": "error",
+	"message": "Merchant not authenticated",
+	"code": "UNAUTHORIZED"
 }
 ```
 
