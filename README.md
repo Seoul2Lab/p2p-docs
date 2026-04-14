@@ -33,15 +33,15 @@ Before you begin, make sure you have received the following from the platform ad
 
 ## Pages
 
-| #   | Page                                                       | Description                                          |
-| --- | ---------------------------------------------------------- | ---------------------------------------------------- |
-| 01  | [Public APIs](01-call-public-api.md)                       | APIs that require no authentication                  |
-| 02  | [Authenticated APIs](02-call-api-with-authentication.md)   | How to call APIs with `x-client-id` & HMAC signature |
-| 03  | [Create Customer](03-create-customer.md)                   | Register a customer bank account                     |
-| 04  | [Create Deposit](04-create-deposit.md)                     | Submit a deposit transaction                         |
-| 05  | [Create Withdraw](05-create-withdraw.md)                   | Submit a withdrawal transaction                      |
-| 06  | [Callback (Webhook)](06-callback-webhook.md)               | How the platform notifies you of status changes      |
-| 07  | [Query Transaction Status](07-query-transaction-status.md) | Check a transaction's current status                 |
+| #   | Page                                                       | Description                                            |
+| --- | ---------------------------------------------------------- | ------------------------------------------------------ |
+| 01  | [Public APIs](01-call-public-api.md)                       | APIs that require no authentication                    |
+| 02  | [Authenticated APIs](02-call-api-with-authentication.md)   | How to call APIs with `x-client-id` & HMAC signature   |
+| 03  | [Create Customer](03-create-customer.md)                   | Register a customer bank account                       |
+| 04  | [Create Deposit](04-create-deposit.md)                     | Submit a deposit transaction, get payment link, cancel |
+| 05  | [Create Withdraw](05-create-withdraw.md)                   | Submit a withdrawal transaction, cancel                |
+| 06  | [Callback (Webhook)](06-callback-webhook.md)               | How the platform notifies you of status changes        |
+| 07  | [Query Transaction Status](07-query-transaction-status.md) | Check a transaction's current status                   |
 
 ---
 
@@ -54,7 +54,11 @@ Before you begin, make sure you have received the following from the platform ad
 2. Call GET /api/v1/client/merchant-info  → Verify your credentials work (authenticated)
 3. Call POST /api/v1/client/customer      → Create a customer bank account
 4. Call POST /api/v1/client/tx/deposit    → Submit a deposit transaction
-5. Call POST /api/v1/client/tx/withdraw   → Submit a withdrawal transaction
+5. Call GET  /api/v1/client/tx/payment-link/:uuid → Get payment link info
+6. Customer uploads slip via payment-link page → POST /api/v1/payment-link/upload
+7. Call POST /api/v1/client/tx/cancel-deposit  → Cancel a deposit
+8. Call POST /api/v1/client/tx/withdraw   → Submit a withdrawal transaction
+9. Call POST /api/v1/client/tx/cancel-withdraw → Cancel a withdrawal
 ```
 
 ### Authentication
